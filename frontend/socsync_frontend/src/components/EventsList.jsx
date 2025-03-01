@@ -110,6 +110,9 @@ function EventsList({ limit, filter, hideTitle, universityId }) {
                 <p className="event-society">
                   {societies[event.society]?.name || 'Unknown Society'}
                 </p>
+                <p className="event-university">
+                  {societies[event.society]?.university?.name || 'Unknown University'}
+                </p>
                 <p className="event-description">
                   {event.description.length > 100 
                     ? `${event.description.substring(0, 100)}...` 

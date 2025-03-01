@@ -1,21 +1,18 @@
-import { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
-import SocietyList from '../components/SocietyList';
-import Calendar from '../components/Calendar';
 import EventsList from '../components/EventsList';
+import SocietyList from '../components/SocietyList';
 import '../styling/HomePage.css';
 
 function HomePage() {
-  const [filter, setFilter] = useState('all');
-  
   return (
     <div className="home-page">
       <Hero />
 
       <section id="upcoming-events" className="section">
         <div className="container">
-          <h2 className="section-title">This Month's Events</h2>
+          <h2 className="section-title">This Week's Events</h2>
           <EventsList limit={4} filter="this-week" />
           <div className="view-all-container">
             <div className="view-options">
@@ -33,7 +30,7 @@ function HomePage() {
       <section id="featured-societies" className="section">
         <div className="container">
           <h2 className="section-title">Featured Societies</h2>
-          <SocietyList filter={filter} random={true} limit={4} />
+          <SocietyList random={true} limit={4} />
           
           <div className="view-all-container">
             <Link to="/societies" className="view-all-link">
@@ -44,6 +41,14 @@ function HomePage() {
       </section>
       
       <section id="about" className="section about-section">
+        {/* Tech decorative elements */}
+        <div className="tech-dots">
+          {[...Array(9)].map((_, i) => (
+            <div key={i} className="tech-dot"></div>
+          ))}
+        </div>
+        <div className="tech-circle"></div>
+        
         <div className="container">
           <h2 className="section-title">About SocSync</h2>
           <p className="about-description">

@@ -89,6 +89,9 @@ function EventDetailPage() {
             <Link to={`/society/${society.id}`} className="view-more">
               View Society Page
             </Link>
+            <p className="event-university">
+              University: {society?.university?.name || 'Unknown University'}
+            </p>
           </div>
         )}
       </div>
