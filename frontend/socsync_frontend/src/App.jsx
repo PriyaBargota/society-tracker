@@ -6,6 +6,7 @@ import SocietiesPage from './pages/SocietiesPage';
 import SocietyDetailPage from './pages/SocietyDetailPage';
 import EventsPage from './pages/EventsPage';
 import EventDetailPage from './pages/EventDetailPage';
+import Calendar from './pages/Calendar';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/societies" element={<SocietiesPage />} />
+            <Route path="/calendar" element={<Calendar />} />
             <Route path="/society/:id" element={<SocietyDetailPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/event/:id" element={<EventDetailPage />} />

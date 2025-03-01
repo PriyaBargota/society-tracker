@@ -16,39 +16,6 @@ function HomePage() {
       <section id="featured-societies" className="section">
         <div className="container">
           <h2 className="section-title">Featured Societies</h2>
-          <div className="filter-buttons">
-            <button 
-              className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-              onClick={() => setFilter('all')}
-            >
-              All
-            </button>
-            <button 
-              className={`filter-btn ${filter === 'academic' ? 'active' : ''}`}
-              onClick={() => setFilter('academic')}
-            >
-              Academic
-            </button>
-            <button 
-              className={`filter-btn ${filter === 'cultural' ? 'active' : ''}`}
-              onClick={() => setFilter('cultural')}
-            >
-              Cultural
-            </button>
-            <button 
-              className={`filter-btn ${filter === 'sports' ? 'active' : ''}`}
-              onClick={() => setFilter('sports')}
-            >
-              Sports
-            </button>
-            <button 
-              className={`filter-btn ${filter === 'arts' ? 'active' : ''}`}
-              onClick={() => setFilter('arts')}
-            >
-              Arts
-            </button>
-          </div>
-          
           <SocietyList filter={filter} />
           
           <div className="view-all-container">
@@ -59,14 +26,14 @@ function HomePage() {
         </div>
       </section>
       
-      <section id="calendar-section" className="section calendar-section">
+      {/* <section id="calendar-section" className="section calendar-section">
         <div className="container">
           <h2 className="section-title">Events Calendar</h2>
           <div className="calendar-container">
             <Calendar />
           </div>
         </div>
-      </section>
+      </section> */}
       
       <section id="upcoming-events" className="section">
         <div className="container">
