@@ -1,6 +1,6 @@
 # hacklondon
 
 Members:
- Priya Bargota\n
- Reza Samaei\n
- Ruhat Chowdhury
+ - Priya Bargota
+ - Reza Samaei
+ - Ruhat Chowdhury
