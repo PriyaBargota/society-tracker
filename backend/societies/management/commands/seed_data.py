@@ -8,8 +8,8 @@ class Command(BaseCommand):
     help = 'Seed the database with sample societies and events'
 
     def add_arguments(self, parser):
-        parser.add_argument('--societies', type=int, default=10, help='Number of societies to create')
-        parser.add_argument('--events', type=int, default=50, help='Number of events to create')
+        parser.add_argument('--societies', type=int, default=30, help='Number of societies to create')
+        parser.add_argument('--events', type=int, default=150, help='Number of events to create')
         parser.add_argument('--clear', action='store_true', help='Clear existing data before seeding')
 
     def handle(self, *args, **options):
@@ -48,6 +48,36 @@ class Command(BaseCommand):
             {'name': 'Film Society', 'description': 'Appreciating cinema and filmmaking'},
             {'name': 'Debate Society', 'description': 'Developing argument and public speaking skills'},
             {'name': 'Entrepreneurship Society', 'description': 'For aspiring business founders and innovators'},
+            {'name': 'Marketing Society', 'description': 'Understanding consumer behavior and advertising'},
+            {'name': 'Music Society', 'description': 'Playing, listening, and appreciating music'},
+            {'name': 'Dance Society', 'description': 'Exploring different dance styles and techniques'},
+            {'name': 'Fashion Society', 'description': 'Fashion shows, design workshops, and more'},
+            {'name': 'Cooking Society', 'description': 'Sharing recipes and culinary experiences'},
+            {'name': 'Gardening Society', 'description': 'Growing plants and maintaining gardens'},
+            {'name': 'Astronomy Society', 'description': 'Stargazing and learning about celestial objects'},
+            {'name': 'Literature Society', 'description': 'Book discussions, writing workshops, and more'},
+            {'name': 'History Society', 'description': 'Exploring past events and historical figures'},
+            {'name': 'Language Society', 'description': 'Learning and practicing different languages'},
+            {'name': 'Travel Society', 'description': 'Sharing travel experiences and tips'},
+            {'name': 'Environment Society', 'description': 'Promoting sustainability and environmental awareness'},
+            {'name': 'Health & Fitness Society', 'description': 'Workouts, nutrition tips, and wellness activities'},
+            {'name': 'Psychology Society', 'description': 'Understanding human behavior and mental processes'},
+            {'name': 'Philosophy Society', 'description': 'Discussions on life, knowledge, and existence'},
+            {'name': 'Art Society', 'description': 'Appreciating and creating visual arts'},
+            {'name': 'Theatre Society', 'description': 'Acting, directing, and producing plays'},
+            {'name': 'Volunteering Society', 'description': 'Community service and social impact initiatives'},
+            {'name': 'Student Council', 'description': 'Representing and organizing student body activities'},
+            {'name': 'Sports Society', 'description': 'Playing and watching sports events'},
+            {'name': 'Chess Society', 'description': 'Playing chess and organizing tournaments'},
+            {'name': 'Magic Society', 'description': 'Learning and performing magic tricks'},
+            {'name': 'Board Games Society', 'description': 'Playing and exploring various board games'},
+            {'name': 'Anime & Manga Society', 'description': 'Discussing and watching anime and manga series'},
+            {'name': 'D&D Society', 'description': 'Playing Dungeons & Dragons and other tabletop RPGs'},
+            {'name': 'Music Production Society', 'description': 'Creating and producing music tracks'},
+            {'name': 'Fashion Design Society', 'description': 'Designing and showcasing fashion collections'},
+            {'name': 'Film Production Society', 'description': 'Producing short films and video projects'},
+            {'name': 'Coding Society', 'description': 'Coding workshops and hackathons'},
+            {'name': 'Startup Society', 'description': 'Supporting student startups and entrepreneurship'}
         ]
         
         # Create more if needed by generating random ones
