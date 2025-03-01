@@ -26,15 +26,6 @@ function HomePage() {
         </div>
       </section>
       
-      {/* <section id="calendar-section" className="section calendar-section">
-        <div className="container">
-          <h2 className="section-title">Events Calendar</h2>
-          <div className="calendar-container">
-            <Calendar />
-          </div>
-        </div>
-      </section> */}
-      
       <section id="upcoming-events" className="section">
         <div className="container">
           <h2 className="section-title">Upcoming Events</h2>
