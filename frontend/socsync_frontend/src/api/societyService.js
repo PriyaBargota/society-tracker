@@ -51,3 +51,13 @@ export const getSocietyEvents = async (societyId) => {
     throw error;
   }
 };
+
+export const getUniversities = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/universities/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching universities:', error);
+    throw error;
+  }
+};

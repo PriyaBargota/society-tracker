@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getEvents, getSocieties } from '../api/societyService';
+import { getEvents, getSocieties, getUniversities } from '../api/societyService';
 import '../styling/EventsList.css';
 
-function EventsList({ limit, filter, hideTitle }) {
+function EventsList({ limit, filter, hideTitle, universityId }) {
   const [events, setEvents] = useState([]);
   const [societies, setSocieties] = useState({});
   const [loading, setLoading] = useState(true);
@@ -12,47 +12,55 @@ function EventsList({ limit, filter, hideTitle }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch both events and societies data
+        // Fetch events, societies, and universities data
         const [eventsData, societiesData] = await Promise.all([
           getEvents(),
           getSocieties()
         ]);
-        
+
         // Create a lookup object for societies
         const societiesLookup = {};
         societiesData.forEach(society => {
           societiesLookup[society.id] = society;
         });
-        
+
         // Apply filters
         let filteredEvents = [...eventsData];
-        
+
         if (filter === 'this-week') {
           // Get the start and end dates for the current week
           const today = new Date();
           const startOfWeek = new Date(today);
           startOfWeek.setDate(today.getDate() - today.getDay()); // Sunday
           startOfWeek.setHours(0, 0, 0, 0);
-          
+
           const endOfWeek = new Date(today);
           endOfWeek.setDate(startOfWeek.getDate() + 6); // Saturday
           endOfWeek.setHours(23, 59, 59, 999);
-          
+
           // Filter events that fall within this week
           filteredEvents = eventsData.filter(event => {
             const eventDate = new Date(event.date);
             return eventDate >= startOfWeek && eventDate <= endOfWeek;
           });
         }
-        
+
+        // Filter by university if universityId is provided
+        if (universityId) {
+          filteredEvents = filteredEvents.filter(event => {
+            const society = societiesLookup[event.society];
+            return society && society.university.id === universityId;
+          });
+        }
+
         // Sort by date (closest first)
         filteredEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-        
+
         // Apply limit if provided
         if (limit) {
           filteredEvents = filteredEvents.slice(0, limit);
         }
-        
+
         setSocieties(societiesLookup);
         setEvents(filteredEvents);
         setLoading(false);
@@ -62,9 +70,9 @@ function EventsList({ limit, filter, hideTitle }) {
         setLoading(false);
       }
     };
-    
+
     fetchData();
-  }, [limit, filter]);
+  }, [limit, filter, universityId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

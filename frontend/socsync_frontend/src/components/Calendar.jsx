@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getEvents } from '../api/societyService';
+import { getEvents, getSocieties } from '../api/societyService';
 import '../styling/Calendar.css';
 
-function Calendar() {
+function Calendar({ universityId }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [events, setEvents] = useState([]);
+  const [societies, setSocieties] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -13,8 +14,28 @@ function Calendar() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const eventsData = await getEvents();
-        setEvents(eventsData);
+        const [eventsData, societiesData] = await Promise.all([
+          getEvents(),
+          getSocieties()
+        ]);
+
+        // Create a lookup object for societies
+        const societiesLookup = {};
+        societiesData.forEach(society => {
+          societiesLookup[society.id] = society;
+        });
+
+        // Filter by university if universityId is provided
+        let filteredEvents = eventsData;
+        if (universityId) {
+          filteredEvents = eventsData.filter(event => {
+            const society = societiesLookup[event.society];
+            return society && society.university.id === universityId;
+          });
+        }
+
+        setSocieties(societiesLookup);
+        setEvents(filteredEvents);
         setLoading(false);
       } catch (err) {
         console.error('Failed to fetch events:', err);
@@ -24,7 +45,7 @@ function Calendar() {
     };
 
     fetchEvents();
-  }, []);
+  }, [universityId]);
 
   const getDaysInMonth = (year, month) => {
     return new Date(year, month + 1, 0).getDate();
