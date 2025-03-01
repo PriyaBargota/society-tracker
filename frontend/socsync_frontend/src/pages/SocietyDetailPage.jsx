@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getSocietyById, getSocietyEvents } from '../api/societyService';
-import './SocietyDetailPage.css';
+import '../styling/SocietyDetailPage.css';
 
 function SocietyDetailPage() {
   const { id } = useParams();

@@ -4,7 +4,7 @@ import Hero from '../components/Hero';
 import SocietyList from '../components/SocietyList';
 import Calendar from '../components/Calendar';
 import EventsList from '../components/EventsList';
-import './HomePage.css';
+import '../styling/HomePage.css';
 
 function HomePage() {
   const [filter, setFilter] = useState('all');

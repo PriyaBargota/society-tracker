@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents, getSocieties } from '../api/societyService';
-import './EventsPage.css';
+import '../styling/EventsPage.css';
 
 function EventsPage() {
   const [events, setEvents] = useState([]);

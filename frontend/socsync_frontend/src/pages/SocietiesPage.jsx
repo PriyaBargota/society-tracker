@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getSocieties } from '../api/societyService';
-import './SocietiesPage.css';
+import '../styling/SocietiesPage.css';
 
 function SocietiesPage() {
   const [societies, setSocieties] = useState([]);
