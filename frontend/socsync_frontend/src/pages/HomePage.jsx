@@ -33,7 +33,7 @@ function HomePage() {
       <section id="featured-societies" className="section">
         <div className="container">
           <h2 className="section-title">Featured Societies</h2>
-          <SocietyList filter={filter} />
+          <SocietyList filter={filter} random={true} limit={4} />
           
           <div className="view-all-container">
             <Link to="/societies" className="view-all-link">
