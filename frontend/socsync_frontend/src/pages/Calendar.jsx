@@ -194,7 +194,7 @@ function CalendarPage() {
                   to={`/event/${event.id}`} 
                   key={event.id} 
                   className="event-indicator"
-                  title={event.title}
+                  title={`${event.title} - ${societies[event.society]?.university?.name || 'Unknown University'}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="event-dot"></div>
@@ -266,6 +266,9 @@ function CalendarPage() {
                   <div className="event-title">{event.title}</div>
                   <div className="event-society">
                     {societies[event.society]?.name || 'Unknown Society'}
+                    {societies[event.society]?.university && (
+                      <span className="event-university"> - {societies[event.society].university.name}</span>
+                    )}
                   </div>
                 </div>
               </Link>
@@ -318,6 +321,9 @@ function CalendarPage() {
                   <h4 className="event-title">{event.title}</h4>
                   <div className="event-society">
                     {societies[event.society]?.name || 'Unknown Society'}
+                    {societies[event.society]?.university && (
+                      <span className="event-university"> - {societies[event.society].university.name}</span>
+                    )}
                   </div>
                   <p className="event-description">{event.description}</p>
                 </div>

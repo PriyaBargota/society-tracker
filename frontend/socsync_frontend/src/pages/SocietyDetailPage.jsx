@@ -37,6 +37,9 @@ function SocietyDetailPage() {
       <div className="society-header">
         <div className="container">
           <h1>{society.name}</h1>
+          <p className="society-university">
+            University: {society.university?.name || 'Unknown University'}
+          </p>
           <div className="society-actions">
             <button className="btn primary">Join Society</button>
             <button className="btn secondary">Follow</button>

@@ -1,122 +1,468 @@
 .societies-page {
   min-height: 80vh;
   padding-bottom: 3rem;
+  background-color: #f8fafc;
+  position: relative;
 }
 
+/* Tech-inspired header */
 .page-header {
-  background-color: #3f51b5;
+  background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
   color: white;
-  padding: 3rem 0;
+  padding: 4rem 0;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Grid pattern overlay */
+.page-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 1;
+}
+
+/* Floating circle effect */
+.page-header::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(79, 70, 229, 0.2) 50%, transparent 70%);
+  top: -200px;
+  right: -100px;
+  z-index: 0;
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  letter-spacing: -0.5px;
 }
 
 .page-header p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   opacity: 0.9;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
 }
 
+/* Enhanced search with floating effect */
 .search-container {
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1.2rem;
-  font-size: 1rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
   border: none;
-  border-radius: 4px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  margin-bottom: -30px; /* Creates floating effect over content */
+  padding-left: 3rem;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+/* Search icon */
+.search-container::before {
+  content: "\f002"; /* Font Awesome search icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6366f1;
+  z-index: 2;
+  font-size: 1.2rem;
 }
 
 .search-input:focus {
   outline: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+  background-color: white;
+  transform: translateY(-2px);
 }
 
+/* Responsive, animated societies grid */
 .societies-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
-  padding: 0 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 2rem;
+  max-width: 1300px;
+  margin: 2rem auto 0;
+  position: relative;
 }
 
+/* Card with enhanced 3D effect */
 .society-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  padding: 1.8rem;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.society-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
 }
 
 .society-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.society-card:hover::before {
+  opacity: 1;
 }
 
 .society-card h2 {
-  color: #3f51b5;
-  margin: 0 0 0.8rem;
-  font-size: 1.3rem;
+  color: #1e293b;
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(45deg, #1e293b, #4338ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.society-card:hover h2 {
+  transform: translateX(5px);
 }
 
 .society-card p {
-  color: #555;
+  color: #64748b;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
   flex-grow: 1;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
 }
 
-.loading, .error, .no-results {
-  text-align: center;
-  padding: 3rem;
-  grid-column: 1 / -1;
-  font-size: 1.2rem;
+/* University tag with tech styling */
+.university-tag {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 6px 12px;
+  background-color: rgba(99, 102, 241, 0.08);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #4338ca;
+  width: fit-content;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.university-tag i {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Status indicators, use in your component to show society status */
+.status-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-badge.new {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* Loading state animation */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
 
 .loading {
-  color: #666;
+  text-align: center;
+  padding: 4rem 2rem;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading::before {
+  content: "";
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(99, 102, 241, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #6366f1;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .error {
-  color: #e53935;
+  text-align: center;
+  padding: 4rem 2rem;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error::before {
+  content: "\f071"; /* Font Awesome warning icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 .no-results {
-  color: #666;
-  font-style: italic;
+  text-align: center;
+  padding: 4rem 2rem;
+  grid-column: 1 / -1;
+  font-size: 1.2rem;
+  color: #64748b;
+  background-color: rgba(241, 245, 249, 0.8);
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.no-results::before {
+  content: "\f002"; /* Font Awesome search icon */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #94a3b8;
+}
+
+/* Staggered animation for society cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.society-card {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+/* Staggering delay for each card */
+.society-card:nth-child(1) { animation-delay: 0.1s; }
+.society-card:nth-child(2) { animation-delay: 0.2s; }
+.society-card:nth-child(3) { animation-delay: 0.3s; }
+.society-card:nth-child(4) { animation-delay: 0.4s; }
+.society-card:nth-child(5) { animation-delay: 0.5s; }
+.society-card:nth-child(6) { animation-delay: 0.6s; }
+.society-card:nth-child(7) { animation-delay: 0.7s; }
+.society-card:nth-child(8) { animation-delay: 0.8s; }
+.society-card:nth-child(9) { animation-delay: 0.9s; }
+.society-card:nth-child(10) { animation-delay: 1s; }
+.society-card:nth-child(n+11) { animation-delay: 1.1s; }
+
+/* Sorting controls - add these to your component */
+.sort-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto 2rem;
+  padding: 0 2rem;
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sort-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sort-select {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  color: #1e293b;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sort-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Filter pills for categories */
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-pill {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-pill:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.filter-pill.active {
+  background-color: #6366f1;
+  color: white;
+  border-color: #6366f1;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
   .page-header {
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
   }
   
   .page-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+  
+  .page-header p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
   }
   
   .societies-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+  
+  .search-input {
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem;
+    margin-bottom: -20px;
+  }
+  
+  .sort-filter-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .search-input {
+    padding-left: 2.5rem;
+  }
+  
+  .search-container::before {
+    left: 15px;
+    font-size: 1rem;
+  }
+  
+  .society-card {
+    padding: 1.3rem;
+  }
+  
+  .society-card h2 {
+    font-size: 1.3rem;
   }
 }

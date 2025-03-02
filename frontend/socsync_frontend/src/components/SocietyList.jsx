@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getSocieties } from '../api/societyService';
-import './SocietyList.css';
+import '../styling/SocietyList.css';
 
-function SocietyList({ filter = 'all', limit = null }) {
+function SocietyList({ filter, random, limit }) {
   const [societies, setSocieties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,49 +12,65 @@ function SocietyList({ filter = 'all', limit = null }) {
     const fetchSocieties = async () => {
       try {
         const data = await getSocieties();
-        setSocieties(data);
+        
+        let filteredSocieties = [...data];
+        if (filter && filter !== 'all') {
+          filteredSocieties = data.filter(society => society.category === filter);
+        }
+
+        if (random) {
+          for (let i = filteredSocieties.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [filteredSocieties[i], filteredSocieties[j]] = [filteredSocieties[j], filteredSocieties[i]];
+          }
+        }
+        
+        if (limit && limit > 0) {
+          filteredSocieties = filteredSocieties.slice(0, limit);
+        }
+        
+        setSocieties(filteredSocieties);
         setLoading(false);
       } catch (err) {
+        console.error('Failed to fetch societies:', err);
         setError('Failed to load societies');
         setLoading(false);
       }
     };
-
+    
     fetchSocieties();
-  }, []);
+  }, [filter, random, limit]);
 
-  if (loading) return <div className="loading">Loading societies...</div>;
-  if (error) return <div className="error">{error}</div>;
-
-  let filteredSocieties = societies;
-  
-  // Apply filters if needed (this is a placeholder - you'd need to add category to your Society model)
-  if (filter !== 'all') {
-    // This is a simplified example; you might want to add a category field to your Society model
-    filteredSocieties = societies.filter(society => 
-      society.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
-  
-  // Apply limit if specified
-  if (limit && limit > 0) {
-    filteredSocieties = filteredSocieties.slice(0, limit);
-  }
+  if (loading) return <div className="society-loading">Loading societies...</div>;
+  if (error) return <div className="society-error">{error}</div>;
 
   return (
     <div className="society-list">
-      {filteredSocieties.length > 0 ? (
-        filteredSocieties.map(society => (
-          <Link key={society.id} to={`/society/${society.id}`} className="society-card">
-            <h3>{society.name}</h3>
-            <p>{society.description.substring(0, 100)}...</p>
-            <div className="society-card-footer">
-              <span className="view-more">View Society</span>
-            </div>
-          </Link>
-        ))
+      {societies.length === 0 ? (
+        <p className="no-societies">No societies found.</p>
       ) : (
-        <div className="empty-message">No societies found.</div>
+        <div className="societies-grid">
+          {societies.map(society => (
+            <Link to={`/society/${society.id}`} key={society.id} className="society-card">
+              {society.logo_url && (
+                <div className="society-logo">
+                  <img src={society.logo_url} alt={`${society.name} logo`} />
+                </div>
+              )}
+              <div className="society-content">
+                <h3 className="society-name">{society.name}</h3>
+                {society.category && (
+                  <span className="society-category">{society.category}</span>
+                )}
+                <p className="society-description">
+                  {society.description.length > 100
+                    ? `${society.description.substring(0, 100)}...`
+                    : society.description}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
       )}
     </div>
   );

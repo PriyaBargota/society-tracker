@@ -9,7 +9,7 @@ import random
 from datetime import timedelta
 from django.utils import timezone
 from users.models import User
-from societies.models import Society, Event
+from societies.models import Society, Event, University
 
 def run_seeder():
     print('Seeding data...')
@@ -19,6 +19,11 @@ def run_seeder():
     User.objects.all().delete()
     Society.objects.all().delete()
     Event.objects.all().delete()
+    University.objects.all().delete()
+    
+    # Create universities
+    print('Creating universities...')
+    create_universities()
     
     # Create users
     print('Creating users...')
@@ -33,7 +38,7 @@ def run_seeder():
     create_events()
     
     print('Successfully seeded database')
-
+    
 def create_users():
     # Create admin user
     User.objects.create_superuser(
@@ -45,7 +50,7 @@ def create_users():
     )
     
     # Create student users
-    universities = ['King\'s College London', 'UCL', 'Imperial College', 'LSE', 'Queen Mary']
+    universities = University.objects.all()
     
     for i in range(1, 21):
         User.objects.create_user(
@@ -68,6 +73,7 @@ def create_users():
 
 def create_societies():
     presidents = User.objects.filter(account_type='president')
+    universities = University.objects.all()
     
     society_data = [
         {
@@ -96,7 +102,8 @@ def create_societies():
     for i, data in enumerate(society_data):
         society = Society.objects.create(
             name=data['name'],
-            description=data['description']
+            description=data['description'],
+            university=random.choice(universities)
         )
         societies.append(society)
 

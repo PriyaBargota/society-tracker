@@ -1,18 +1,29 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import './Hero.css';
+import '../styling/Hero.css';
 
 function Hero() {
   return (
-    <section className="hero">
+    <div className="hero">
+      <div className="hero-floating-element"></div>
+      <div className="hero-floating-element"></div>
+      <div className="hero-floating-element"></div>
+      
       <div className="hero-content">
-        <h1 className="hero-title">Welcome to SocSync</h1>
-        <p className="hero-subtitle">Your central hub for all university societies and events</p>
+        <h1 className="hero-title">Connect with University Societies</h1>
+        <p className="hero-subtitle">
+          Discover events, join communities, and make the most of your university experience with SocSync - your gateway to campus life
+        </p>
         <div className="hero-buttons">
-          <Link to="/events" className="hero-button primary">Explore Events</Link>
-          <Link to="/societies" className="hero-button secondary">Join Societies</Link>
+          <Link to="/societies" className="hero-button primary">
+            Explore Societies
+          </Link>
+          <Link to="/calendar" className="hero-button secondary">
+            View Events Calendar
+          </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

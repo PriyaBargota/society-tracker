@@ -2,13 +2,13 @@ import random
 from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from societies.models import Society, Event
+from societies.models import Society, Event, University
 
 class Command(BaseCommand):
     help = 'Seed the database with sample societies and events'
 
     def add_arguments(self, parser):
-        parser.add_argument('--societies', type=int, default=30, help='Number of societies to create')
+        parser.add_argument('--societies', type=int, default=50, help='Number of societies to create')
         parser.add_argument('--events', type=int, default=150, help='Number of events to create')
         parser.add_argument('--clear', action='store_true', help='Clear existing data before seeding')
 
@@ -22,6 +22,7 @@ class Command(BaseCommand):
         num_societies = options['societies']
         num_events = options['events']
 
+        self.create_universities()
         self._create_societies(num_societies)
         self._create_events(num_events)
 
@@ -29,8 +30,22 @@ class Command(BaseCommand):
             self.style.SUCCESS(f'Successfully seeded {num_societies} societies and {num_events} events')
         )
 
+    def create_universities(self):
+        universities = [
+            {'name': 'King\'s College London', 'location': 'London'},
+            {'name': 'UCL', 'location': 'London'},
+            {'name': 'Imperial College', 'location': 'London'},
+            {'name': 'LSE', 'location': 'London'},
+            {'name': 'Queen Mary', 'location': 'London'}
+        ]
+        
+        for uni in universities:
+            University.objects.create(name=uni['name'], location=uni['location'])
+
+
     def _create_societies(self, count):
         self.stdout.write(f'Creating {count} societies...')
+        universities = University.objects.all()
         
         society_data = [
             {'name': 'Computer Science Society', 'description': 'For computer science enthusiasts'},
@@ -91,6 +106,7 @@ class Command(BaseCommand):
         selected_societies = society_data[:count]
         
         for society_info in selected_societies:
+            society_info['university'] = random.choice(universities)
             Society.objects.create(**society_info)
 
     def _create_events(self, count):
