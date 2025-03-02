@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './SignUp.css'; // Import the CSS file
+import './Login.css'; // Reuse or create a new CSS file for styling
 
-function SignUp() {
+function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -16,31 +16,32 @@ function SignUp() {
     setError(''); // Clear error on input change
   };
 
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;  // At least 8 chars, 1 letter, 1 number
-    return regex.test(password);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validatePassword(formData.password)) {
-      setError('Password must be at least 8 characters long and include at least one letter and one number.');
-      return;
-    }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
-      console.log('User registered:', response.data);
-      navigate('/login'); // Redirect to the login page after successful registration
+      const response = await axios.post('http://127.0.0.1:8000/api/login/', formData);
+      console.log('Login successful:', response.data);
+      localStorage.setItem('username', response.data.username);
+      if (onLogin) {
+        onLogin(response.data.username);
+      }
+      navigate('/');
     } catch (error) {
-      console.error('Registration failed:', error.response.data);
-      setError('Registration failed. Please check your details and try again.');
+      console.error('Login failed:', error);
+      if (error.response) {
+        setError(error.response.data.error || 'Invalid username or password.');
+      } else if (error.request) {
+        setError('No response from the server. Please try again later.');
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     }
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-form">
-        <h2>Sign Up</h2>
+    <div className="login-container">
+      <div className="login-form">
+        <h2>Login</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -63,11 +64,11 @@ function SignUp() {
               required
             />
           </div>
-          <button type="submit" className="signup-button">Sign Up</button>
+          <button type="submit" className="login-button">Login</button>
         </form>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default Login;

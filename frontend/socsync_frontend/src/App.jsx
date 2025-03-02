@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -9,9 +10,22 @@ import EventDetailPage from './pages/EventDetailPage';
 import Calendar from './pages/Calendar';
 import About from './pages/About';
 import SignUp from './components/SignUp'
+import Login from './components/Login';
 import './App.css';
+import React from 'react';
 
 function App() {
+  const [username, setUsername] = useState(localStorage.getItem('username'));
+
+  const handleLogin = (username) => {
+    localStorage.setItem('username', username);
+    setUsername(username); // Update the state to trigger a re-render
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('username');
+    setUsername(null); // Update the state to trigger a re-render
+  };
   return (
     <Router>
       <div className="app">
@@ -26,6 +40,7 @@ function App() {
             <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/about" element={<About />} />
             <Route path= "/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
             {/* Additional routes can be added here */}
           </Routes>
         </main>
