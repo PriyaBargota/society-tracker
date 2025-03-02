@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from societies.models import Society, Event, University
+from users.models import User  # Import the User model
+from faker import Faker  # Add this import
 
 class Command(BaseCommand):
     help = 'Seed the database with sample societies and events'
@@ -10,6 +12,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--societies', type=int, default=50, help='Number of societies to create')
         parser.add_argument('--events', type=int, default=150, help='Number of events to create')
+        parser.add_argument('--users', type=int, default=100, help='Number of users to create')
         parser.add_argument('--clear', action='store_true', help='Clear existing data before seeding')
 
     def handle(self, *args, **options):
@@ -17,17 +20,21 @@ class Command(BaseCommand):
             self.stdout.write('Clearing existing data...')
             Event.objects.all().delete()
             Society.objects.all().delete()
+            # Only delete non-superuser users when clearing
+            User.objects.filter(is_superuser=False).delete()
             self.stdout.write(self.style.SUCCESS('Successfully cleared existing data'))
 
         num_societies = options['societies']
         num_events = options['events']
+        num_users = options['users']
 
         self.create_universities()
+        self._create_users(num_users)  # Add this line to create users
         self._create_societies(num_societies)
         self._create_events(num_events)
 
         self.stdout.write(
-            self.style.SUCCESS(f'Successfully seeded {num_societies} societies and {num_events} events')
+            self.style.SUCCESS(f'Successfully seeded {num_societies} societies, {num_events} events, and {num_users} users')
         )
 
     def create_universities(self):
@@ -42,10 +49,58 @@ class Command(BaseCommand):
         for uni in universities:
             University.objects.create(name=uni['name'], location=uni['location'])
 
+    def _create_users(self, count):
+        self.stdout.write(f'Creating users...')
+        universities = list(University.objects.all())
+        fake = Faker()
+        
+        if not universities:
+            self.stdout.write(self.style.ERROR('No universities found, cannot create users'))
+            return
+        
+        admin_email = 'admin@socsync.com'
+        if not User.objects.filter(email=admin_email).exists():
+            User.objects.create_superuser(
+                email=admin_email,
+                password='admin123',
+                name='Admin User',
+                university=random.choice(universities),
+                account_type='student'
+            )
+            self.stdout.write(self.style.SUCCESS(f'Created admin user: {admin_email}'))
+        
+        student_count = int(count * 0.8)  # 80% of users are students
+        for i in range(1, student_count + 1):
+            name = fake.name()
+            email = f"{name.lower().replace(' ', '.')}{i}@example.com"
+            if not User.objects.filter(email=email).exists():
+                User.objects.create_user(
+                    email=email,
+                    password='password123',
+                    name=name,
+                    university=random.choice(universities),
+                    account_type='student'
+                )
+        
+        president_count = count - student_count  # Remaining users are presidents
+        for i in range(1, president_count + 1):
+            name = fake.name() 
+            email = f"president.{name.lower().replace(' ', '.')}{i}@example.com"
+            if not User.objects.filter(email=email).exists():
+                User.objects.create_user(
+                    email=email,
+                    password='password123',
+                    name=name,  
+                    university=random.choice(universities),
+                    account_type='president'
+                )
+        
+        self.stdout.write(self.style.SUCCESS(f'Created {student_count} students and {president_count} society presidents'))
 
     def _create_societies(self, count):
         self.stdout.write(f'Creating {count} societies...')
         universities = University.objects.all()
+        presidents = User.objects.filter(account_type='president')
         
         society_data = [
             {'name': 'Computer Science Society', 'description': 'For computer science enthusiasts'},
@@ -107,6 +162,18 @@ class Command(BaseCommand):
         
         for society_info in selected_societies:
             society_info['university'] = random.choice(universities)
+
+            matching_presidents = presidents.filter(university=society_info['university'])
+            if matching_presidents.exists():
+                president = random.choice(matching_presidents)
+                society_info['president'] = president
+            elif presidents.exists():
+                # Fall back to any president if none from same university
+                president = random.choice(presidents)
+                society_info['president'] = president
+            else:
+                president = None
+
             Society.objects.create(**society_info)
 
     def _create_events(self, count):

@@ -11,6 +11,7 @@ class Society(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     university = models.ForeignKey(University, on_delete=models.CASCADE, null=True)
+    president = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
