@@ -61,3 +61,45 @@ export const getUniversities = async () => {
     throw error;
   }
 };
+
+// Authentication services
+export const login = async (email, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/login/`, { email, password });
+    return response.data;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw error;
+  }
+};
+
+export const register = async (userData) => {
+  try {
+    const response = await axios.post(`${API_URL}/register/`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Registration failed:', error);
+    throw error;
+  }
+};
+
+// You could also add these user-related methods
+export const getUserProfile = async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/user/${userId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
+};
+
+export const updateUserProfile = async (userId, userData) => {
+  try {
+    const response = await axios.put(`${API_URL}/user/${userId}/`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+};

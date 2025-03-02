@@ -1,0 +1,39 @@
+/* Import shared auth styles */
+@import './AuthStyles.css';
+
+/* SignUp-specific styles */
+.auth-container {
+  background: linear-gradient(135deg, #2c2c2c 0%, #2c2c2c 100%);
+}
+
+.auth-button {
+  color: #2c2c2c;
+}
+
+/* Style for the signup description */
+.signup-description {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Add a link to login for better UX */
+.signup-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.signup-footer a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.signup-footer a:hover {
+  text-decoration: underline;
+}

@@ -9,8 +9,8 @@ import EventsPage from './pages/EventsPage';
 import EventDetailPage from './pages/EventDetailPage';
 import Calendar from './pages/Calendar';
 import About from './pages/About';
-import SignUp from './components/SignUp'
-import Login from './components/Login';
+import Login from './pages/LogIn'; // Updated path to match your file structure
+import SignUp from './pages/SignUp'; // Updated path to match your file structure
 import './App.css';
 import React from 'react';
 
