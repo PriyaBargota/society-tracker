@@ -4,9 +4,15 @@ import '../styling/Navbar.css';
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const username = localStorage.getItem('username');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('username');
+    window.location.reload(); // Refresh the page to update the navbar
   };
 
   return (
@@ -39,8 +45,17 @@ function Navbar() {
             </li>
           </ul>
           <div className="navbar-buttons">
-            <Link to="/login" className="btn btn-outline">Login</Link>
-            <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+            {username ? (
+              <>
+                <Link to="#" className="navbar-username">Hello, {username}</Link>
+                <button onClick={handleLogout} className="btn btn-outline">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-outline">Login</Link>
+                <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+              </>
+            )}
           </div>
         </nav>
       </div>

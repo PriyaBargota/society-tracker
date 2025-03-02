@@ -15,6 +15,7 @@ function SocietiesPage() {
     const fetchSocieties = async () => {
       try {
         const data = await getSocieties();
+        console.log('Fetched societies:', data); // Debug line
         setSocieties(data);
         setLoading(false);
       } catch (err) {
@@ -27,8 +28,9 @@ function SocietiesPage() {
     fetchSocieties();
   }, []);
 
+  const validSocieties = societies.filter(society => society.university !== null);
   // Filter societies based on search term and category filter
-  const filteredSocieties = societies
+  const filteredSocieties = validSocieties
     .filter(society => 
       (society.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
       society.description.toLowerCase().includes(searchTerm.toLowerCase())) &&
@@ -44,7 +46,7 @@ function SocietiesPage() {
     });
 
   // Get unique categories for filter pills
-  const categories = ['all', ...new Set(societies.map(society => society.category).filter(Boolean))];
+  const categories = ['all', ...new Set(validSocieties.map(society => society.category).filter(Boolean))];
 
   if (loading) return (
     <div className="societies-page">
@@ -117,7 +119,7 @@ function SocietiesPage() {
               
               <div className="university-tag">
                 <i className="fas fa-university"></i>
-                <span>{society.university.name}</span>
+                <span>{society.university ? society.university.name : 'Unknown University'}</span>
               </div>
               
               {society.category && (
