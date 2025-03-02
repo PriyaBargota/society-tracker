@@ -38,35 +38,36 @@ function SignUp() {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-form">
-        <h2>Sign Up</h2>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Username:</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="signup-button">Sign Up</button>
-        </form>
+    // Updated structure for both components
+
+    <div className="auth-container">
+      <div className="auth-form-container">
+        <div className="auth-form">
+          <h2>Sign Up</h2> {/* Change to "Login" for Login.jsx */}
+          {error && <div className="error-message">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                name="username"
+                required
+              />
+              <label>Username</label>
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                required
+              />
+              <label>Password</label>
+            </div>
+            <button type="submit" className="auth-button">Sign Up</button>
+          </form>
+        </div>
       </div>
     </div>
+
   );
 }
 

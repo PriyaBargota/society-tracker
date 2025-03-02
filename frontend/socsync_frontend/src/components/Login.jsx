@@ -38,37 +38,36 @@ function Login({ onLogin }) {
     }
   };
 
-  return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Login</h2>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Username:</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button type="submit" className="login-button">Login</button>
-        </form>
-      </div>
-    </div>
-  );
+// Updated structure for both components
+    return (
+        <div className="auth-container">
+        <div className="auth-form-container">
+            <div className="auth-form">
+            <h2>Log in</h2> 
+            {error && <div className="error-message">{error}</div>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                <input
+                    type="text"
+                    name="username"
+                    required
+                />
+                <label>Username</label>
+                </div>
+                <div className="form-group">
+                <input
+                    type="password"
+                    name="password"
+                    required
+                />
+                <label>Password</label>
+                </div>
+                <button type="submit" className="auth-button">Log in</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    );
 }
 
 export default Login;
