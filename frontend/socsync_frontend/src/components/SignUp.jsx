@@ -23,6 +23,8 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Password:', formData.password);
+    console.log('Validation Result:', validatePassword(formData.password));
     if (!validatePassword(formData.password)) {
       setError('Password must be at least 8 characters long and include at least one letter and one number.');
       return;
@@ -38,8 +40,6 @@ function SignUp() {
   };
 
   return (
-    // Updated structure for both components
-
     <div className="auth-container">
       <div className="auth-form-container">
         <div className="auth-form">
@@ -50,6 +50,8 @@ function SignUp() {
               <input
                 type="text"
                 name="username"
+                value={formData.username}
+                onChange={handleChange}
                 required
               />
               <label>Username</label>
@@ -58,6 +60,8 @@ function SignUp() {
               <input
                 type="password"
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
               <label>Password</label>
@@ -67,7 +71,6 @@ function SignUp() {
         </div>
       </div>
     </div>
-
   );
 }
 
